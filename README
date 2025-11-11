@@ -1,0 +1,28 @@
+This repository presents 'assertion': an automated, first-order predicate logic prover
+featuring the following three properties:
+
+ (i) it is sound,
+ (ii) it is refutationally complete,
+ (iii) the properties (i) and (ii) have been formally verified in Isabelle/HOL.
+
+
+The repository is structured as follows:
+
+
+ -- the folder 'client' contains a client program for accessing an advanced
+    version of the assertion-prover running as a cloud service;
+    for more details see 'client/README' as well as
+
+
+ -- the file 'client_manual.pdf' which addresses lots of (technical) questions 
+
+
+
+ -- the folder 'src' contains the OCaml source code of a basic implementation
+    of the prover in form of a 'dune' project;
+    see 'src/README' for more details 
+
+
+
+
+Inquiries can be sent to:  assertion@quantifier.cloud
