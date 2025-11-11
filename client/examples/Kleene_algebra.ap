@@ -1,0 +1,86 @@
+
+
+assertion "order-antisym" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) -->
+(ALL a b c. a + b = b & b + a = a --> a = b);
+
+assertion "order-trans" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) -->
+(ALL a b c. a + b = b & b + c = c --> a + c = c);
+
+
+
+assertion "join1" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) -->
+(ALL a b x. (a + b) + x = x --> a + x = x);
+
+assertion "join2" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) -->
+(ALL a b x. (a + b) + x = x --> b + x = x);
+
+assertion "join3" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) -->
+(ALL a b x. a + x = x & b + x = x --> (a + b) + x = x);
+
+
+assertion "mono-right" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) & 
+(ALL a b c. a * (b * c) = (a * b) * c) & 
+(ALL a b c. a * (b + c) = (a * b) + (a * c)) &
+(ALL a b c. (b + c) * a = (b * a) + (c * a)) -->
+(ALL a b c. a + b = b --> (c * a) + (c * b) = c * b);
+
+
+
+
+
+assertion "unit-leq" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) &
+(ALL a. a * 1() = a) &
+
+(ALL a b c. a + b = b --> (c * a) + (c * b) = c * b) -->
+(ALL a b. 1() + b = b --> a + (a * b) = a * b);
+
+
+
+assertion "star-ind" :
+(ALL a. a + a = a) & (ALL a b. a + b = b + a) & 
+(ALL a b c. a + (b + c) = (a + b) + c) & 
+(ALL a. a + 0() = a) &
+
+(ALL a b c. a * (b * c) = (a * b) * c) & 
+(ALL a b c. a * (b + c) = (a * b) + (a * c)) &
+(ALL a b c. (b + c) * a = (b * a) + (c * a)) & 
+(ALL a. 1() * a = a) & (ALL a. a * 1() = a) & (ALL a. 0() * a = 0()) & (ALL a. a * 0() = 0()) &
+
+(ALL a b. (a * b) + b = b --> (s(a) * b) + b = b) &
+(ALL a b. (a * b) + a = a --> (a * s(b)) + a = a) &
+(ALL a. (1() + (s(a) * a)) + s(a) = s(a)) &
+(ALL a. (1() + (a * s(a))) + s(a) = s(a)) &
+
+(ALL a b. 1() + b = b --> a + (a * b) = a * b) &
+(ALL a b c. a + b = b & b + c = c --> a + c = c) -->
+(ALL i a. 1() + i = i & (a * i) + i = i --> s(a) + i = i);
+
+
+
+assertion "star-mono" ["using the above induction rule"] : 
+(ALL a. (1() + (a * s(a))) + s(a) = s(a)) &
+
+(ALL a b x. (a + b) + x = x --> a + x = x) &
+(ALL a b x. (a + b) + x = x --> b + x = x) &
+(ALL a b c. a + b = b --> (a * c) + (b * c) = b * c) &
+(ALL a b c. a + b = b & b + c = c --> a + c = c) &  
+(ALL i a. 1() + i = i & (a * i) + i = i --> s(a) + i = i) -->
+(ALL a b. a + b = b --> s(a) + s(b) = s(b))
+
+
+
+

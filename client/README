@@ -1,0 +1,58 @@
+I DEPLOYING THE ASSERTION-CLIENT
+
+ The prover is running as a cloud service that processes assertion-files
+sent using the client 'assertion/Client.class' which comprises a java-package.
+
+The client gets easily deployed on any system where a stable internet connection,
+a Java Runtime Environment (JRE, visit www.java.com for more information)
+as well as a terminal console (command prompt) are accessible:
+
+  * place the folder 'assertion' containing 'Client.class' in a folder <dir> on your system,
+    typing subsequently in a terminal console
+    
+
+       cd <dir>
+       java assertion.Client <path to an assertion-prover file>
+
+
+    to transfer <an assertion-prover file> to the server for processing.    
+
+
+For instance, if the file 'misc.ap' resides in the folder '<dir>/examples' then
+
+      cd <dir>
+      java assertion.Client examples/misc.ap
+
+(on some systems one has to use backslashes: examples\misc.ap)
+requests the server to process the content of 'misc.ap' 
+which results in a response sent back to the client.
+
+NOTE: NO DATA gets collected by the server except basic connection related statistics.
+
+There is currently a slot of about 30 seconds for such a request:
+the connection to the server gets closed straight when the limit is exceeded.
+
+This limit can however be extended to 90 seconds using subscription.
+
+
+II SUBSCRIPTION 
+
+ In addition to the slot extension, during the subscribed period
+each purchased token entitles a designated client program to
+
+   * access a significantly more powerful server
+
+   * optional generation of proofs for confirmed assertions
+     (see 'client_manual.pdf' for details)
+     
+
+The price of one token:  € 50  for 30 days.
+
+Inquiries can be sent to:  assertion@quantifier.cloud 
+
+
+
+
+
+
+

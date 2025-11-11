@@ -1,0 +1,53 @@
+
+assertion "a propositional tautology" :
+(A --> B) | (B --> A);
+
+assertion "yet another propositional tautology" :
+(A | B) & ~(C & (A | B)) | ~(A | B | C) <-> ~C;
+
+
+assertion "Russel's paradox" :
+EX b. ALL a. S(b, a) <-> ~S(a, a);
+
+assertion "Russel's paradox negation" :
+~(EX b. ALL a. S(b, a) <-> ~ S(a, a));
+
+
+assertion "P34" ["from 'Seventy-Five Problems for Testing Automatic Theorem Provers' by F. J. Pelletier"] :
+(EX x. ALL y. P(x) <-> P(y)) <-> ((EX x. Q(x)) <-> (ALL y. Q(y))) <-> 
+(EX x. ALL y. Q(x) <-> Q(y)) <-> ((EX x. P(x)) <-> (ALL y. P(y)));
+
+
+assertion "P43" ["from F. J. Pelletier's paper also"] :
+(ALL a b. Q(a, b) <-> (ALL c. F(c, a) <-> F(c, b))) --> (ALL a b. Q(a, b) <-> Q(b, a));
+
+
+assertion "P48" ["a simple _equational_ tautology from F. J. Pelletier's paper"] :
+ALL a b c d. (a = b | c = d) & (a = c | b = d) --> (a = d | b = c);
+
+
+assertion "P48b" ["since 'equational tautology' means 'for all models where = is interpreted as the equality', this is essentially the same as the preceding assertion"] :
+(a() = b() | c() = d()) & (a() = c() | b() = d()) --> (a() = d() | b() = c());
+
+
+assertion "P48c" ["and this version using free variables is the same too"] :
+(a = b | c = d) & (a = c | b = d) --> (a = d | b = c);
+
+
+
+assertion "P61" ["from F. J. Pelletier's paper once more"] :
+(ALL u v w. f(u, f(v, w)) = f(f(u, v), w)) --> 
+(ALL u v w z. f(u, f(v, f(w, z))) = f(f(f(u, v), w), z));
+
+
+assertion "groups1" ["a basic property of groups"] :
+(ALL a b c. (a * b) * c = a * (b * c)) &
+(ALL a. 1() * a = a) & (ALL a. i(a) * a = 1()) -->
+(ALL a. a * 1() = a);
+
+
+assertion "linear orders" :
+(ALL a b c. a < b & b < c --> a < c) & (ALL a b. a < b | a = b | b < a) &
+(ALL a b. a < b --> ~ b < a) &
+(ALL a b. a <= b <-> (a < b | a = b)) -->
+(ALL a b. a <= b | b <= a & (a <= b & b <= a --> a = b))
