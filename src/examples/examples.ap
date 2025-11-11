@@ -1,0 +1,66 @@
+
+assertion "top" ["an evident tautology"] :
+True;
+
+assertion "bottom" ["the negation is evidently satisfiable with any non-empty domain"] :
+False;
+
+
+assertion "prop1" ["Peirce's Law"] :
+((A --> B) --> A) --> A;
+
+assertion "prop2" ["also a propositional tautology"] :
+((A --> B) <-> B) <-> A | B;
+
+assertion "prop3" ["rejected because the implication associates to the right"] :
+(A --> B --> C) <-> ((A --> B) --> C);
+
+assertion "prop4" ["this direction is however valid"] :
+((A --> B) --> C) --> A --> B --> C;
+
+
+
+assertion "mfo1" ["a monadic fol formula with satisfiable negation: it gets properly rejected by the prover"] :
+((ALL x. P1(x) --> Q(x)) & (ALL x. P2(x) --> Q(x))) --> (ALL x. Q(x));
+
+assertion "mfo2" ["this is by contrast a tautology"] :
+EX a. ALL b c. (P(b) --> Q(c)) --> P(a) --> Q(a); 
+
+assertion "mfo3" ["this one too"] :
+(ALL x. P(x) <-> Q(x)) --> (ALL x. P(x)) <-> (ALL x. Q(x));
+
+assertion "mfo4" ["but the opposite direction is not"] :
+((ALL x. P(x)) <-> (ALL x. Q(x))) --> (ALL x. P(x) <-> Q(x));
+
+
+
+assertion "Russel's paradox" :
+~(EX a. ALL b. S(a, b) <-> ~ S(b, b));
+
+assertion "Galois connections" ["<< and >> are just infix notations for relations that get explicitly assumed to be preorders"] :
+(ALL a. a << a & a >> a) &
+(ALL a b c. a << b --> b << c --> a << c) &
+(ALL a b c. a >> b --> b >> c --> a >> c) &
+(ALL a b. a << b --> f(a) >> f(b)) &
+(ALL a b. a >> b --> g(a) << g(b)) -->
+((ALL a. f(g(a)) >> a) & (ALL a. a << g(f(a)))) <-> (ALL a b. f(a) >> b <-> a << g(b));
+
+
+assertion "P42" ["from 'Seventy-Five Problems for Testing Automatic Theorem Provers' by F. J. Pelletier"] :
+~(EX b. ALL a. F(a, b) <-> ~(EX c. F(a, c) & F(c, a)));
+
+assertion "P43" ["from the same paper"] :
+(ALL a b. Q(a, b) <-> (ALL c. F(c, a) <-> F(c, b))) --> (ALL a b. Q(a, b) <-> Q(b, a));
+
+
+assertion "infixes" ["uses the infix function symbol -> and the infix predicate symbol =>"] :
+(ALL a b x. a => b --> a -> x => b -> x) &
+(ALL a. a => a) -->
+(ALL a x. a -> x => a -> x);
+
+
+assertion "eq_check" ["checks equational reasoning support"] :
+a = b --> f(a) = f(b)
+
+
+ 

@@ -1,0 +1,97 @@
+License Agreement
+
+
+§ 1 Preamble
+
+The aim of this license agreement is to enable free non-commercial use
+of the software that is described in the sequel. In order to guarantee
+this, it is necessary to set up rules for the use of the software that
+hold for any user.
+
+Provider  of this license is  'quantifier.cloud'  ("license provider"
+in  the sequel).  The license provider has   developed  a  prover for
+the first-order predicate logic that includes a collection of modules
+(called "software" in the sequel) written in the programming language
+OCaml (see ocaml.org for more details).
+
+Following  the ideas of  open source  software,  the  license provider
+gives access to the software  without fee  for anyone (called "license
+taker" in the sequel) under the following conditions which are similar
+to the Lesser Gnu  Public License (LGPL).  Each license taker  obliges
+himself to follow the terms of this agreement.
+
+
+
+§ 2 Principles
+
+Each license taker appreciates the terms of use and  receives a simple
+right, not resctricted in  time and space and  without any fee, to use
+the software  in scientific research and education and, in particular,
+to copy, distribute and process it. Exclusively the following terms of
+use  do  hold.   The  licence  provider  explicitly   contradicts  any
+conflicting terms of use.
+
+
+
+§ 3 Copying
+
+Any  license  taker  has  the right to make and distribute  unmodified
+copies of the software on any media. Prerequisite is that this license
+agreement is clearly recognisable and that the sources are included in
+any distribution.
+
+
+
+§ 4 Modification and Distribution
+
+Any license taker has the right  to modify copies of the software  (or
+parts  thereof) and to distribute these  modifications under the terms
+of § 3 above and the following conditions:
+
+1. The modified software has to carry a clear  mark that points to the
+   original  license  provider, the modification  that  has been made,
+   and the date of the modification.
+
+2. The license taker has to  ensure that the  software  as a whole  or
+   parts of it are accessible to third parties under the terms of this
+   license agreement without any fees.
+
+3. If during the modification a copyright of the license taker emerges
+   then this copyright must be put under the terms  of this license if
+   the modified software is distributed.
+
+
+
+§ 5 Other duties
+
+1. Reference to  the validity  of this license agreement  must not  be
+   modified or deleted by any license taker.
+
+2. The use of the software by third parties must not be conditioned by
+   the  fulfilment  of  duties  that are not mentioned in this license
+   agreement.
+
+3. The  use of the software  must  not be prevented  or complicated by
+   means of technical protection, in particular copy protection means.
+
+
+
+§ 6 Liability, Update
+
+1. Liability   of the  license  provider  is restricted  to fraudulent
+   withheld factual or legal errors.  The license  provider  does  not
+   give any warranty, not even the implied warranty of merchantability
+   or  fitness for a particular purpose. The license provider  neither
+   ensures any properties of the software. 
+
+2. The license provider has the right to update these  terms of use at
+   any time.
+
+
+
+§ 7 Termination through Offence
+
+Any violation of a duty of this agreement automatically terminates the
+rights of use for the offender.
+
+

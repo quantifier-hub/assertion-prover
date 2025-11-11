@@ -1,0 +1,26 @@
+(lang dune 3.17)
+
+(name assertion)
+
+(generate_opam_files true)
+
+(source
+ (github quantifier-hub/assertion-prover))
+
+(authors "<assertion@quantifier.cloud>")
+
+(maintainers "<assertion@quantifier.cloud>")
+
+(license LICENSE)
+
+(documentation https://github.com/quantifier-hub/assertion-prover/blob/main/README)
+
+(package
+ (name assertion)
+ (synopsis "A verified first-order logic prover")
+ (description "A verified OCaml implementation of 'assertion': an automated prover for the first-order predicate logic")
+ (depends ocaml)
+ (tags
+  ("automated proving" "first-order logic")))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

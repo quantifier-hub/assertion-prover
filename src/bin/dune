@@ -1,0 +1,4 @@
+(executable
+ (public_name assertion)
+ (name main)
+ (libraries zarith lib lex parser preprocess search))

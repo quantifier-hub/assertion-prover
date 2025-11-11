@@ -1,0 +1,25 @@
+
+(library
+ (name lib)
+ (modules lib)
+ (libraries zarith))
+
+(library
+ (name preprocess)
+ (modules preprocess)
+ (libraries lib zarith))
+
+(library
+ (name search)
+ (modules search)
+ (libraries lib preprocess zarith))
+
+(library
+ (name lex)
+ (modules lex)
+ (libraries lib))
+
+(library
+ (name parser)
+ (modules parser)
+ (libraries lex lib))

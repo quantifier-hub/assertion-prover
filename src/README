@@ -1,0 +1,8 @@
+This folder contains a basic implementation of the 'assertion' prover
+written in the programming language OCaml (see ocaml.org for details).
+The modules are organised as a 'dune' project and can thus be compiled
+by running 'dune build'.
+
+A few example assertions can be found in 'examples/examples.ap'.
+
+See LICENSE for more details.
