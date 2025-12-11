@@ -32,7 +32,7 @@ NOTE: NO DATA gets collected by the server except basic connection related stati
 There is currently a slot of about 30 seconds for such a request:
 the connection to the server gets closed straight when the limit is exceeded.
 
-This limit can however be extended to 90 seconds using subscription.
+This limit can however be extended to 120 seconds and more using subscription.
 
 
 II SUBSCRIPTION 
@@ -46,9 +46,9 @@ each purchased token entitles a designated client program to
      (see https://github.com/quantifier-hub/assertion-prover/blob/main/client_manual.pdf for details)
      
 
-The price of one token:  € 50  for 30 days.
+The price of one standard token:  € 50  for 30 days.
 
-Inquiries can be sent to:  assertion@quantifier.cloud 
+Inquiries can be sent to:         assertion@quantifier.cloud 
 
 
 
