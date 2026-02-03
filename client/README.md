@@ -5,10 +5,10 @@ sent using the client 'assertion/Client.class' which comprises a java-package.
 
 The client gets easily deployed on any system where a stable internet connection,
 a Java Runtime Environment (JRE, visit www.java.com for more information)
-as well as a terminal console (command prompt) are accessible:
+as well as a terminal console (a command prompt) are accessible:
 
   * place the folder 'assertion' containing 'Client.class' in a folder \<dir\> on your system,
-    typing subsequently in a terminal console (or a command prompt):
+    typing subsequently in a terminal console:
     
 
                   cd <dir>
@@ -23,9 +23,10 @@ For instance, if the file 'misc.ap' resides in the folder \<dir\>/examples then
       cd <dir>
       java assertion.Client examples/misc.ap
 
-(on some systems one has to use backslashes: examples\misc.ap)
+(NOTE: on some systems one has to type examples\misc.ap instead)
+
 requests the server to process the content of 'misc.ap' 
-which results in a response sent back to the client.
+resulting in a response sent back to the client and printed in the console.
 
 NOTE: NO DATA gets collected by the server except basic connection related statistics.
 
