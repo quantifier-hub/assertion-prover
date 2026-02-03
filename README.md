@@ -1,11 +1,11 @@
 This repository presents 'assertion': an automated, first-order predicate logic prover
 featuring the following three properties:
 
- (i) it is sound,
+      (i) it is sound,
  
- (ii) it is refutationally complete,
+      (ii) it is refutationally complete,
  
- (iii) the properties (i) and (ii) have been formally verified in Isabelle/HOL.
+      (iii) the properties (i) and (ii) have been formally verified in Isabelle/HOL.
 
 
 
