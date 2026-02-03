@@ -1,4 +1,4 @@
-I DEPLOYING THE ASSERTION-CLIENT
+I. DEPLOYING THE ASSERTION-CLIENT
 
  The prover is running as a cloud service that processes assertion-files
 sent using the client 'assertion/Client.class' which comprises a java-package.
@@ -19,11 +19,12 @@ as well as a terminal console (a command prompt) are accessible:
 
 
 For instance, if the file 'misc.ap' resides in the folder \<dir\>/examples then
+(NOTE: on some systems one has to type examples\misc.ap instead)
+
 
       cd <dir>
       java assertion.Client examples/misc.ap
 
-(NOTE: on some systems one has to type examples\misc.ap instead)
 
 requests the server to process the content of 'misc.ap' 
 resulting in a response sent back to the client and printed in the console.
@@ -36,7 +37,7 @@ the connection to the server gets closed straight when the limit is exceeded.
 This limit can however be extended to 120 seconds and more using subscription.
 
 
-II SUBSCRIPTION 
+II. SUBSCRIPTION 
 
  In addition to the slot extension, during the subscribed period
 each purchased token entitles a designated client program to
