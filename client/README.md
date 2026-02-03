@@ -19,11 +19,14 @@ as well as a terminal console (a command prompt) are accessible:
 
 
 For instance, if the file 'misc.ap' resides in the folder \<dir\>/examples then
-(NOTE: on some systems one has to type examples\misc.ap instead)
-
 
       cd <dir>
       java assertion.Client examples/misc.ap
+
+or with a backslash on Windows command prompt
+
+      cd <dir>
+      java assertion.Client examples\misc.ap
 
 
 requests the server to process the content of 'misc.ap' 
