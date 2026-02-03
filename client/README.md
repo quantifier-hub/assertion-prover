@@ -8,14 +8,14 @@ a Java Runtime Environment (JRE, visit www.java.com for more information)
 as well as a terminal console (command prompt) are accessible:
 
   * place the folder 'assertion' containing 'Client.class' in a folder \<dir\> on your system,
-    typing subsequently in a terminal console
+    typing subsequently in a terminal console (or a command prompt):
     
 
                   cd <dir>
                   java assertion.Client <path to an assertion-prover file>
 
 
-    to transfer '<an assertion-prover file>' to the server for processing.    
+    to transfer \<an assertion-prover file\> to the server for processing.    
 
 
 For instance, if the file 'misc.ap' resides in the folder \<dir\>/examples then
