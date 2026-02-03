@@ -15,10 +15,10 @@ as well as a terminal console (command prompt) are accessible:
                   java assertion.Client <path to an assertion-prover file>
 
 
-    to transfer <an assertion-prover file> to the server for processing.    
+    to transfer '<an assertion-prover file>' to the server for processing.    
 
 
-For instance, if the file 'misc.ap' resides in the folder '<dir>/examples' then
+For instance, if the file 'misc.ap' resides in the folder <dir>/examples then
 
       cd <dir>
       java assertion.Client examples/misc.ap
