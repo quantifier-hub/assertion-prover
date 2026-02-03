@@ -11,8 +11,8 @@ as well as a terminal console (command prompt) are accessible:
     typing subsequently in a terminal console
     
 
-       cd <dir>
-       java assertion.Client <path to an assertion-prover file>
+                  cd <dir>
+                  java assertion.Client <path to an assertion-prover file>
 
 
     to transfer <an assertion-prover file> to the server for processing.    
