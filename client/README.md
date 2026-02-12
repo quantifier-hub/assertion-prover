@@ -18,19 +18,19 @@ as well as a terminal console (a command prompt) are accessible:
     to transfer \<an assertion-prover file\> to the server for processing.    
 
 
-For instance, if the file 'misc.ap' resides in the folder \<dir\>/examples then
+For instance, if the file 'misc.ap' resides in the folder \<dir\>/examples then either
 
       cd <dir>
       java assertion.Client examples/misc.ap
 
-or with a backslash on Windows command prompt
+or using backslash on a Windows command prompt:
 
       cd <dir>
       java assertion.Client examples\misc.ap
 
 
-requests the server to process the content of 'misc.ap' 
-resulting in a response sent back to the client and printed in the console.
+requests the server to process the content of 'misc.ap' resulting in responses
+being sent back to the client and displayed on the screen.
 
 NOTE: NO DATA gets collected by the server except basic connection related statistics.
 
@@ -42,7 +42,7 @@ This limit can however be extended to 120 seconds and more using subscription.
 
 II. SUBSCRIPTION 
 
- In addition to the slot extension, during the subscribed period
+ In addition to a slot extension, during the subscribed period
 each purchased token entitles a designated client program to
 
    * access a significantly more powerful server
@@ -51,7 +51,7 @@ each purchased token entitles a designated client program to
      (see https://github.com/quantifier-hub/assertion-prover/blob/main/client_manual.pdf for details)
      
 
-The price of one standard token:  € 50  for 30 days.
+The price of one standard token:  € 55  for 30 days.
 
 Inquiries can be sent to:         assertion@quantifier.cloud 
 
