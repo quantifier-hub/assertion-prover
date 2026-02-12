@@ -1,0 +1,9 @@
+
+assertion "propositional object-logic"
+["'T' contains the terms derivable from the assumptions (axioms) where '->' may denote the implication, 'n' -- the negation"] :
+
+(ALL a b. T(a -> (b -> a))) &
+(ALL a b c. T((a -> (b -> c)) -> ((a -> b) -> (a -> c)))) &
+(ALL a b. T((n(a) -> n(b)) -> (b -> a))) &
+(ALL a b. T(a -> b) --> T(a) --> T(b)) -->
+(ALL a. T(a -> n(a -> n(a))))
