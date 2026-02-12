@@ -16,7 +16,7 @@ The repository is structured as follows:
 
  * the folder 'client' contains a client program for accessing an advanced
    version of the assertion-prover running as a cloud service;
-   for more details see 'client/README' as well as
+   for more details see 'client/README.md' as well as
 
 
  * the file 'client_manual.pdf' which addresses lots of (technical) questions 
