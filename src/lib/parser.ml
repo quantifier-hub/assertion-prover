@@ -133,16 +133,22 @@ let consume_id b (_ : unit) : (char * (char * char)) parser =
 let rec many1 (p : unit -> 'a parser) : unit -> 'a list parser =
     p >>= (fun u -> ((many1 p >>= (fun ls -> succeed(u::ls))) ||| succeed [u]));;
 
-let rec list1 (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser =
-    p >>= (fun u -> ((match_eq sep |-- list1 sep p) >>= (fun ls -> succeed(u::ls))) 
+let rec list1s (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser =
+    p >>= (fun u -> ((match_eq sep |-- list1s sep p) >>= (fun ls -> succeed(u::ls))) 
                   ||| succeed [u]);;
 
-let list (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser = (list1 sep p ||| succeed []);;
+let list (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser = (list1s sep p ||| succeed []);;
 
 
 let optional (p : unit -> 'a parser) : unit -> 'a option parser = 
  (p >>= (fun a -> succeed (Some a)))
      ||| succeed None;;
+
+
+let rec list1 (p : unit -> 'a parser) : unit -> 'a list parser =
+    p >>= (fun u -> (list1 p >>= (fun ls -> succeed(u::ls))) 
+                  ||| succeed [u]);;
+
 
 
 
@@ -199,7 +205,7 @@ and f4(u) : ((char * (char * char)) aFormula) parser =
     |||
       ((termP' >>= (fun tL -> (consume_infix_id true >>= (fun s -> (termP' >>= (fun tR -> succeed(Pred(s, [tL; tR])))))))) 
     |||
-       ((consume_id true >>= (fun p -> ((match_eq "(" |-- list1 "," termP') --| match_eq ")") >>= (fun ts -> succeed(Pred(p, ts))) 
+       ((consume_id true >>= (fun p -> ((match_eq "(" |-- list1s "," termP') --| match_eq ")") >>= (fun ts -> succeed(Pred(p, ts))) 
                              ||| 
                                 succeed(Pred(p, [])))) 
     ||| 
@@ -207,20 +213,20 @@ and f4(u) : ((char * (char * char)) aFormula) parser =
 
 
 (* *** *)
-(* a query parser *)
+(* an assertion parser *)
 (* *** *)
 
 let commentP(u) : string parser = (match_eq "[" |-- (match_eq "\"" |-- (consume_str --| (match_eq "\"" |-- match_eq "]")))) u;;
   
 
-let queryP(u) : (string * ((char * (char * char)) aFormula)) parser =
+let assertionP(u) : (string * ((char * (char * char)) aFormula)) parser =
   (match_eq "assertion" |-- (match_eq "\"" |-- (consume_str -- (match_eq "\"" |-- (optional(commentP) |-- (match_eq ":" |-- f0)))))) u;;
 
 
 
 let parse_from_channel (ch : In_channel.t) =  
   let ll = tokenize_file ch in
-  let p = list1 ";" queryP () ll in
+  let p = list1 assertionP () ll in
   match p with
     Failed msg -> let _ = print_string ("Syntax error:\n" ^ msg) ; flush_all() in
                    Failed msg                   
