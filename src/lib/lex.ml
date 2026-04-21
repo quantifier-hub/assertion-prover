@@ -11,14 +11,6 @@
 
 
 
-open Lib
-
-
-let test (a : string) i = 
-    try
-        Some a.[i]
-    with _ -> None;;
-
                   
 let rec mem_chr c (x : char list) =
     match x with
@@ -61,59 +53,55 @@ let delims = [ '('; ')'; '~'; '.'; ','; ';'; ':'; '['; ']'];;
 let esc = '"';;
 
 
-let buf = ref [];;                              
-
-let rec split_file em (t : string) i l r (f : in_channel) =
+let rec split_file buf em (t : string) i l r (f : in_channel) =
   let lt = String.length t in
-  let lb = size_list (!buf) in
-  if lb <= i then
+  if Dynarray.length buf <= i then
     try
       let c = input_char f in
-      let _ = (buf := c::!buf) in
+      Dynarray.add_last buf c;
       if em then
-        (if Char.equal c esc then (if String.equal t "" then LCons(mk_token (Char.escaped c) l r, 
-                                                                 fun () -> split_file false "" (i+1) l (r+1) f) 
+        (if c = esc then (if t = "" then LCons(mk_token (Char.escaped c) l r, 
+                                                                 fun () -> split_file buf false "" (i+1) l (r+1) f) 
                                             else LCons (mk_token t l r,
                                                         fun () -> LCons(mk_token (Char.escaped c) l (r + lt),
-                                                                        fun () -> split_file false "" (i+1) l (r + lt + 1) f)))
-         else (if Char.equal c '\n' then failwith ("illegal new line at " ^ (string_of_int l))
-              else split_file true (t ^ (Char.escaped c)) (i+1) l r f))
-      else (if Char.equal c esc then (if String.equal t "" then LCons(mk_token (Char.escaped c) l r, 
-                                                                 fun () -> split_file true "" (i+1) l (r+1) f) 
-                                            else LCons (mk_token t l r,
-                                                        fun () -> LCons(mk_token (Char.escaped c) l (r + lt),
-                                                                        fun () -> split_file true "" (i+1) l (r + lt + 1) f)))
-              
-      else (if Char.equal c '\n' then (if String.equal t "" then split_file false t (i+1) (l+1) 1 f 
-                        else LCons (mk_token t l r, fun () -> split_file false "" (i+1) (l+1) 1 f))
-      else (if mem_chr c skips then (if String.equal t "" then split_file false t (i+1) l (r+1) f 
-                                     else LCons (mk_token t l r, fun () -> split_file false "" (i+1) l (r + lt + 1) f))
-            else (if mem_chr c delims then (if String.equal t "" then LCons(mk_token (Char.escaped c) l r, 
-                                                                 fun () -> split_file false "" (i+1) l (r+1) f) 
-                                            else LCons (mk_token t l r,
-                                                        fun () -> LCons(mk_token (Char.escaped c) l (r + lt),
-                                                                        fun () -> split_file false "" (i+1) l (r + lt + 1) f)))
-                  else split_file false (t ^ (Char.escaped c)) (i+1) l r f))))
+                                                                        fun () -> split_file buf false "" (i+1) l (r + lt + 1) f)))
+         else (if c = '\n' then failwith ("illegal new line at " ^ (string_of_int l))
+              else split_file buf true (t ^ (Char.escaped c)) (i+1) l r f))
+      else (if c = esc then (if t = "" then LCons(mk_token (Char.escaped c) l r, 
+                                                                 fun () -> split_file buf true "" (i+1) l (r+1) f) 
+                             else LCons (mk_token t l r,
+                                         fun () -> LCons(mk_token (Char.escaped c) l (r + lt),
+                                                         fun () -> split_file buf true "" (i+1) l (r + lt + 1) f)))
+                            
+            else (if c = '\n' then (if t = "" then split_file buf false t (i+1) (l+1) 1 f 
+                                    else LCons (mk_token t l r, fun () -> split_file buf false "" (i+1) (l+1) 1 f))
+                  else (if mem_chr c skips then (if t = "" then split_file buf false t (i+1) l (r+1) f 
+                                                 else LCons (mk_token t l r, fun () -> split_file buf false "" (i+1) l (r + lt + 1) f))
+                        else (if mem_chr c delims then (if t = "" then LCons(mk_token (Char.escaped c) l r, 
+                                                                             fun () -> split_file buf false "" (i+1) l (r+1) f) 
+                                                        else LCons (mk_token t l r,
+                                                                    fun () -> LCons(mk_token (Char.escaped c) l (r + lt),
+                                                                                    fun () -> split_file buf false "" (i+1) l (r + lt + 1) f)))
+                              else split_file buf false (t ^ (Char.escaped c)) (i+1) l r f))))
     with
-      End_of_file -> if String.equal t "" then LNil else LCons (mk_token t l r, fun () -> LNil)
+      End_of_file -> if t = "" then LNil else LCons (mk_token t l r, fun () -> LNil)
     | e ->  close_in_noerr f;           (* emergency closing *)
             raise e                                                 
   else
-    let c = List.nth (!buf) (lb - 1 - i) in
-    if Char.equal c '\n' then (if String.equal t "" then split_file false t (i+1) (l+1) 1 f 
-                      else LCons (mk_token t l r, fun () -> split_file false "" (i+1) (l+1) 1 f))
-    else (if mem_chr c skips then (if String.equal t "" then split_file false t (i+1) l (r+1) f 
-                                   else LCons (mk_token t l r, fun () -> split_file false "" (i+1) l (r + lt + 1) f))
-          else (if mem_chr c delims then (if String.equal t "" then LCons(mk_token (Char.escaped c) l r, 
-                                                               fun () -> split_file false "" (i+1) l (r+1) f) 
+    let c = Dynarray.get buf i in
+    if c = '\n' then (if t = "" then split_file buf false t (i+1) (l+1) 1 f 
+                      else LCons (mk_token t l r, fun () -> split_file buf false "" (i+1) (l+1) 1 f))
+    else (if mem_chr c skips then (if t = "" then split_file buf false t (i+1) l (r+1) f 
+                                   else LCons (mk_token t l r, fun () -> split_file buf false "" (i+1) l (r + lt + 1) f))
+          else (if mem_chr c delims then (if t = "" then LCons(mk_token (Char.escaped c) l r, 
+                                                               fun () -> split_file buf false "" (i+1) l (r+1) f) 
                                           else LCons (mk_token t l r, 
                                                       fun () -> LCons(mk_token (Char.escaped c) l (r + lt),
-                                                                      fun () -> split_file false "" (i+1) l (r + lt + 1) f)))
-                else split_file false (t ^ (Char.escaped c)) (i+1) l r f))
+                                                                      fun () -> split_file buf false "" (i+1) l (r + lt + 1) f)))
+                else split_file buf false (t ^ (Char.escaped c)) (i+1) l r f));;
+
 
            
-let tokenize_file x =
-  let _ = (buf := []) in
-  split_file false "" 0 1 1 x
+let tokenize_file x = split_file (Dynarray.create ()) false "" 0 1 1 x;;
 
 
