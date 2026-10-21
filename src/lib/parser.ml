@@ -43,7 +43,7 @@ let match_eq (x : string) (_ : unit) : string parser =
                LNil -> Failed(x ^ " expected but nothing found.\n")
              | LCons(t, f) -> if String.equal (t.content) x then Parsed(x, f()) 
                               else Failed("'"^x^"' at line " ^ (string_of_int t.line) ^
-                                            " row " ^ (string_of_int t.row) ^ " expected, but '" ^
+                                            " column " ^ (string_of_int t.column) ^ " expected, but '" ^
                                           t.content ^ "' found.\n"));;
 
 let is_alphaC c = let i = Char.code c in i >= 65 && i <= 90;;
@@ -73,7 +73,7 @@ let consume_id b (_ : unit) : (char * (char * char)) parser =
                              if (b && is_alphaC c0) || (not b && (is_alpha c0 || is_num c0))
                              then Parsed(('\000', ('\000', c0)), f())
                              else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                         " row " ^ (string_of_int t.row) ^ " is an illegal identifier.\n"))
+                                         " column " ^ (string_of_int t.column) ^ " is an illegal identifier.\n"))
                        else if String.length(t.content) = 2
                                  then (let c0 = t.content.[0] in
                                        let c1 = t.content.[1] in
@@ -81,9 +81,9 @@ let consume_id b (_ : unit) : (char * (char * char)) parser =
                                           (not b && (is_alpha c0 || is_num c0) && (is_alpha c1 || is_num c1 || mem_chr c1 accents))
                                        then Parsed(('\000', (c0, c1)), f())
                                        else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                                   " row " ^ (string_of_int t.row) ^ " is an illegal identifier.\n"))
+                                                   " column " ^ (string_of_int t.column) ^ " is an illegal identifier.\n"))
                                  else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                             " row " ^ (string_of_int t.row) ^ " is too long for an identifier.\n")));;
+                                             " column " ^ (string_of_int t.column) ^ " is too long for an identifier.\n")));;
 
 
 
@@ -96,16 +96,16 @@ let consume_id b (_ : unit) : (char * (char * char)) parser =
                              if (b && mem_string t.content ix1) || (not b && mem_string t.content ix3)
                              then Parsed(('\000', ('\001', c0)), f())
                              else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                         " row " ^ (string_of_int t.row) ^ " is an illegal infix identifier.\n"))
+                                         " column " ^ (string_of_int t.column) ^ " is an illegal infix identifier.\n"))
                        else if String.length(t.content) = 2
                                  then (let c0 = t.content.[0] in
                                        let c1 = t.content.[1] in
                                        if (b && mem_string t.content ix2) || (not b && mem_string t.content ix4)
                                        then Parsed(('\001', (c0, c1)), f())
                                        else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                                   " row " ^ (string_of_int t.row) ^ " is an illegal infix identifier.\n"))
+                                                   " column " ^ (string_of_int t.column) ^ " is an illegal infix identifier.\n"))
                                  else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                             " row " ^ (string_of_int t.row) ^ " is too long for an identifier.\n")));;
+                                             " column " ^ (string_of_int t.column) ^ " is too long for an identifier.\n")));;
                                       
 
 
@@ -117,33 +117,37 @@ let consume_id b (_ : unit) : (char * (char * char)) parser =
                              if is_alpha c0
                              then Parsed(('\000', ('\000', c0)), f())
                              else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                         " row " ^ (string_of_int t.row) ^ " is an illegal variable identifier.\n"))
+                                         " column " ^ (string_of_int t.column) ^ " is an illegal variable identifier.\n"))
                        else if String.length(t.content) = 2
                                  then (let c0 = t.content.[0] in
                                        let c1 = t.content.[1] in
                                        if is_alpha c0 && (is_alpha c1 || is_num c1)
                                        then Parsed(('\000', (c0, c1)), f())
                                        else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                                   " row " ^ (string_of_int t.row) ^ " is an illegal variable identifier.\n"))
+                                                   " column " ^ (string_of_int t.column) ^ " is an illegal variable identifier.\n"))
                                  else Failed("'"^t.content^"' at line " ^ (string_of_int t.line) ^
-                                             " row " ^ (string_of_int t.row) ^ " is too long for an identifier.\n")));;
+                                             " column " ^ (string_of_int t.column) ^ " is too long for an identifier.\n")));;
                                      
 
 
 let rec many1 (p : unit -> 'a parser) : unit -> 'a list parser =
     p >>= (fun u -> ((many1 p >>= (fun ls -> succeed(u::ls))) ||| succeed [u]));;
 
-let rec list1 (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser =
-    p >>= (fun u -> ((match_eq sep |-- list1 sep p) >>= (fun ls -> succeed(u::ls))) 
+let rec list1s (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser =
+    p >>= (fun u -> ((match_eq sep |-- list1s sep p) >>= (fun ls -> succeed(u::ls))) 
                   ||| succeed [u]);;
 
-let list (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser = (list1 sep p ||| succeed []);;
+let list (sep : string) (p : unit -> 'a parser) : unit -> 'a list parser = (list1s sep p ||| succeed []);;
 
 
 let optional (p : unit -> 'a parser) : unit -> 'a option parser = 
  (p >>= (fun a -> succeed (Some a)))
      ||| succeed None;;
 
+
+let rec list1 (p : unit -> 'a parser) : unit -> 'a list parser =
+    p >>= (fun u -> (list1 p >>= (fun ls -> succeed(u::ls))) 
+                  ||| succeed [u]);;
 
 
 
@@ -201,7 +205,7 @@ and f4(u) : ((char * (char * char)) aFormula) parser =
     |||
       ((termP' >>= (fun tL -> (consume_infix_id true >>= (fun s -> (termP' >>= (fun tR -> succeed(Pred(s, [tL; tR])))))))) 
     |||
-       ((consume_id true >>= (fun p -> ((match_eq "(" |-- list1 "," termP') --| match_eq ")") >>= (fun ts -> succeed(Pred(p, ts))) 
+       ((consume_id true >>= (fun p -> ((match_eq "(" |-- list1s "," termP') --| match_eq ")") >>= (fun ts -> succeed(Pred(p, ts))) 
                              ||| 
                                 succeed(Pred(p, [])))) 
     ||| 
@@ -222,7 +226,7 @@ let assertionP(u) : (string * ((char * (char * char)) aFormula)) parser =
 
 let parse_from_channel (ch : In_channel.t) =  
   let ll = tokenize_file ch in
-  let p = many1 assertionP () ll in
+  let p = list1 assertionP () ll in
   match p with
     Failed msg -> let _ = print_string ("Syntax error:\n" ^ msg) ; flush_all() in
                    Failed msg                   
