@@ -29,6 +29,6 @@ The repository is structured as follows:
 
 
 
-Web:      www.quantifier.cloud
+Web:      quantifier.cloud
 
-Contact:  assertion@quantifier.cloud
+Email: contact@quantifier.cloud
