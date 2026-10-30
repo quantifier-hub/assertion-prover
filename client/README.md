@@ -45,13 +45,13 @@ II. SUBSCRIPTION
  In addition to an extended slot, during the subscribed period
 each purchased token entitles a designated client program to
 
-   * accessing a significantly more powerful server
+   * access a significantly more powerful server
 
-   * receiving proof files for confirmed assertions
+   * receive proof files for confirmed assertions
      (see https://github.com/quantifier-hub/assertion-prover/blob/main/client_manual.pdf for details).
      
 
-The price of one standard token:  € 55  for 30 days.
+The price of one standard token:  € 60  for 30 days.
 
 Inquiries and questions can be sent to:    assertion@quantifier.cloud 
 
